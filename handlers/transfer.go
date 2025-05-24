@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"ewallet-backend-jwt/auth"
 	"ewallet-backend-jwt/db"
@@ -10,11 +11,13 @@ import (
 )
 
 func TransferHandler(w http.ResponseWriter, r *http.Request) {
-    if r.Method != http.MethodPost {
+	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	fromUserID := auth.GetUserID(r)
+	senderUserID := auth.GetUserID(r)
+
+	fromUserID, _ := strconv.Atoi(senderUserID)
 
 	var req model.TransferRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

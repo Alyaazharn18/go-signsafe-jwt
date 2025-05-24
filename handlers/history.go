@@ -14,7 +14,7 @@ type HistoryEntry struct {
 	ID           int     `json:"id"`
 	Type         string  `json:"type"`
 	Amount       float64 `json:"amount"`
-	ToUserID     *string `json:"to_user_id,omitempty"`
+	ToUserID     *int    `json:"to_user_id,omitempty"`
 	Timestamp    string  `json:"timestamp"`
 	Nonce        string  `json:"nonce"`
 	Signature    string  `json:"signature"`

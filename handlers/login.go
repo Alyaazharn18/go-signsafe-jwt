@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 
 	"ewallet-backend-jwt/auth"
 	"ewallet-backend-jwt/db"
@@ -26,7 +27,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var userData struct {
-		Id   string `json:"id"`
+		Id   int    `json:"id"`
 		Name string `json:"name"`
 	}
 
@@ -42,7 +43,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("%+v", userData)
 
-	token, err := auth.GenerateJWT(userData.Id)
+	convId := strconv.Itoa(userData.Id)
+
+	token, err := auth.GenerateJWT(convId)
 	if err != nil {
 		http.Error(w, "Could not generate token", http.StatusInternalServerError)
 		return
